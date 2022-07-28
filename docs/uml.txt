@@ -80,13 +80,13 @@ package GraphingPackage {
       {method} + void free_coord_axis(coord_axis *);
     }
 
-    class graph_border {
-       {field} + width : int
-       {field} + b_color : color *
-      {method} + graph_border * init_graph_border(color *, int)
-      {method} + void write_gb_to_canvas(canvas *, graph_border *)
-      {method} + void graph_border_dump_debug(graph_border *)
-      {method} + void free_graph_border(graph_border *)
+    class GraphBorder {
+       {field} - BorderColor : TColor
+       {field} - BorderWidth : integer
+      {method} + GraphBorder(integer)
+      {method} + Destroy
+      {method} + WriteBorderToCanvas(TCanvas)
+      {method} + integer GetBorder()
     }
 
     class Numeric {
@@ -249,7 +249,7 @@ Canvas "1" o--> "*" Pixel
 ' The arrows relating to GraphingPresets
 axis_tic_marks "2" <-up-o "1" graph_scale
 coord_axis     "2" <-up-o "1" graph_scale
-graph_border       <-up-o     graph_scale
+GraphBorder        <-up-o     graph_scale
 Numeric            <-up-o     graph_scale
 
 ' token       o--> token_type

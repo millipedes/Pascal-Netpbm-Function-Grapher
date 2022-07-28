@@ -15,6 +15,7 @@ type
     constructor Create(Height, Width : integer); overload;
     destructor Destroy; override;
 
+    function GetPixelInstance(i, j : integer) : TPixel;
     function GetCanvasHeight() : integer;
     function GetCanvasWidth() : integer;
     procedure WriteRectangle(Left, Top, Height, Width : integer);
@@ -52,6 +53,11 @@ end;
 destructor TCanvas.Destroy;
 begin
   inherited;
+end;
+
+function TCanvas.GetPixelInstance(i, j : integer) : TPixel;
+begin
+  GetPixelInstance := PixelInstance[i][j];
 end;
 
 function TCanvas.GetCanvasHeight() : integer;

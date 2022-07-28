@@ -154,7 +154,7 @@ end;
 
 procedure TNumeric.WriteNumericToCanvas(Top, Left : integer; Can : TCanvas);
 var
-  i, j, MonoSpacer : integer;
+  i, MonoSpacer : integer;
 begin
   MonoSpacer := round(real(NumericWidth) / 20.0);
   for i := 0 to Length(MonoSegment) - 1 do
