@@ -30,6 +30,7 @@ end;
 
 destructor TGraphBorder.Destroy;
 begin
+  BorderColor.Free;
   inherited;
 end;
 

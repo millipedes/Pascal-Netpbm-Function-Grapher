@@ -8,24 +8,24 @@ uses
 type
   TCoordinateAxis = Class
   private
-    CAColor : TColor;
-    AxisMin : integer;
-    AxisMax : integer;
+      CAColor : TColor;
+      AxisMin : real;
+      AxisMax : real;
     AxisWidth : integer;
-    Axis : char;
+         Axis : char;
   public
-    constructor Create(Min, Max, Width : integer; Ax : char);
+    constructor Create(Min, Max : real; Width : integer; Ax : char);
     destructor Destroy; override;
 
-    function GetAxisMin() : integer;
-    function GetAxisMax() : integer;
+    function GetAxisMin() : real;
+    function GetAxisMax() : real;
 
     procedure WriteCoordinateAxisToCanvas(Can : TCanvas);
 end;
 
 implementation
 
-constructor TCoordinateAxis.Create(Min, Max, Width : integer; Ax : char);
+constructor TCoordinateAxis.Create(Min, Max : real; Width : integer; Ax : char);
 begin
   CAColor := TColor.Create(0, 0, 0);
   AxisMin := Min;
@@ -36,15 +36,16 @@ end;
 
 destructor TCoordinateAxis.Destroy;
 begin
+  CAColor.Free;
   inherited;
 end;
 
-function TCoordinateAxis.GetAxisMin() : integer;
+function TCoordinateAxis.GetAxisMin() : real;
 begin
   GetAxisMin := AxisMin;
 end;
 
-function TCoordinateAxis.GetAxisMax() : integer;
+function TCoordinateAxis.GetAxisMax() : real;
 begin
   GetAxisMax := AxisMax;
 end;

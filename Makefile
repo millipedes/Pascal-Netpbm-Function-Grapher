@@ -1,8 +1,8 @@
-PC=fpc -gv -g
+PC=fpc -glh
 TWOD=$(wildcard */*/*.pas)
 
 all:
-	fpc Main.pas
+	$(PC) Main.pas
 
 vim:
 	nvim Main.pas $(TWOD)

@@ -51,7 +51,12 @@ begin
 end;
 
 destructor TCanvas.Destroy;
+var
+  i, j : integer;
 begin
+  for i := 0 to CanvasHeight - 1 do
+    for j := 0 to CanvasWidth - 1 do
+      PixelInstance[i][j].Free;
   inherited;
 end;
 
@@ -76,7 +81,7 @@ var
 begin
   for i := Top to (Top + Height - 1) do
     for j := Left to (Left + Width - 1) do
-      PixelInstance[i][j].GetPixelColor.SetChannel(0, 0, 0);
+      GetPixelInstance(i, j).GetPixelColor.SetChannel(0, 0, 0);
 end;
 
 procedure TCanvas.Dump;

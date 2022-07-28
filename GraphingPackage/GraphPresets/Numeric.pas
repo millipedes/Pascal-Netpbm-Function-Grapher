@@ -9,11 +9,11 @@ uses
 type
   TNumeric = Class
   private
-    MonoSegment : array of array of integer;
-    Complement : array of boolean;
+       MonoSegment : array of array of integer;
+        Complement : array of boolean;
     NumericLiteral : string;
-    NumericHeight : integer;
-    NumericWidth : integer;
+     NumericHeight : integer;
+      NumericWidth : integer;
   public
     constructor Create(Literal : real; Height, Width : integer);
     destructor Destroy; override;

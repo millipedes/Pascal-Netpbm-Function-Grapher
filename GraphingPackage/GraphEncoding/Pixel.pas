@@ -45,6 +45,7 @@ end;
 
 destructor TPixel.Destroy;
 begin
+  PixelColor.Free;
   inherited;
 end;
 

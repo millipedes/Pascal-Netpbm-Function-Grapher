@@ -24,6 +24,9 @@ begin
   CB.WriteCoordinateAxisToCanvas(P);
   {N.Debug;}
   P.Dump;
+  CA.Free;
+  CB.Free;
+  BG.Free;
   P.Free;
   N.Free;
 end.

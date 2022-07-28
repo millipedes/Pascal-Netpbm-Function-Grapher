@@ -68,16 +68,16 @@ package GraphingPackage {
       {method} + void free_axis_tic_marks(axis_tic_marks *)
     }
 
-    class coord_axis {
-       {field} + black : color *
-       {field} + axis_min : double
-       {field} + axis_max : double
-       {field} + width : int
-      {method} + coord_axis * init_coord_axis(int, axis);
-      {method} + void write_ca_to_canvas(canvas *, coord_axis *);
-      {method} + int in_range_of_ca(coord_axis *, int, int);
-      {method} + void coord_axis_dump_debug(coord_axis *);
-      {method} + void free_coord_axis(coord_axis *);
+    class CoordinateAxis {
+       {field} - CAColor : TColor
+       {field} - AxisMin : real
+       {field} - AxisMax : real
+       {field} - AxisWidth : integer
+      {method} + Create(real, real, integer, char)
+      {method} + Destroy
+      {method} + real GetAxisMin()
+      {method} + real GetAxisMax()
+      {method} + WriteCoordinateAxisToCanvas(TCanvas)
     }
 
     class GraphBorder {
@@ -248,7 +248,7 @@ Canvas "1" o--> "*" Pixel
 
 ' The arrows relating to GraphingPresets
 axis_tic_marks "2" <-up-o "1" graph_scale
-coord_axis     "2" <-up-o "1" graph_scale
+CoordinateAxis "2" <-up-o "1" graph_scale
 GraphBorder        <-up-o     graph_scale
 Numeric            <-up-o     graph_scale
 
