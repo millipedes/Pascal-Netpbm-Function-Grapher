@@ -18,6 +18,9 @@ type
     destructor Destroy; override;
 
     procedure WriteATMToCanvas(Can : TCanvas);
+    function GetATMQuantity : integer;
+    function GetATMWidth : integer;
+    function GetATMHeight : integer;
 end;
 
 implementation
@@ -37,7 +40,21 @@ begin
   inherited;
 end;
 
-{TCanvas.WriteRectangle(Left, Top, Height, Width : integer);}
+function TAxisTicMarks.GetATMQuantity : integer;
+begin
+  GetATMQuantity := ATMQuantity;
+end;
+
+function TAxisTicMarks.GetATMWidth : integer;
+begin
+  GetATMWidth := ATMWidth;
+end;
+
+function TAxisTicMarks.GetATMHeight : integer;
+begin
+  GetATMHeight := ATMHeight;
+end;
+
 procedure TAxisTicMarks.WriteATMToCanvas(Can : TCanvas);
 var
   i : integer;

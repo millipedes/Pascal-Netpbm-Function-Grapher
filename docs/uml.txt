@@ -47,25 +47,28 @@ package GraphingPackage {
   }
 
   package GraphPresets {
-    class graph_scale {
-       {field} + atm : axis_tic_marks *
-       {field} + coord_axes : coord_axis *
-       {field} + gb : graph_border *
-       {field} + axis_no : int
-      {method} + graph_scale * init_graph_scale(axis_tic_marks *, coord_axis *, coord_axis *, graph_border *, int)
-      {method} + void write_gs_to_canvas(canvas *, graph_scale *);
-      {method} + void free_graph_scale(graph_scale *);
+    class GraphScale {
+       {field} - GSGraphBorder : TGraphBorder
+       {field} - GSNumeric : array of TNumeric
+       {field} - GSCoordinateAxes : array of TCoordinateAxis
+       {field} - GSAxesTicMarks : array of TAxisTicMarks
+      {method} + Create
+      {method} + Create(real, real, real, real)
+      {method} + Destroy
+      {method} + WriteGraphScaleToCanvas(TCanvas)
     }
 
-    class axis_tic_marks {
-       {field} + col : color *
-       {field} + qty : int 
-       {field} + width : int 
-       {field} + height : int 
-      {method} + axis_tic_marks * init_axis_tic_marks(int, int, int, axis)
-      {method} + void write_atm_to_canvas(canvas *, axis_tic_marks *)
-      {method} + void axis_tic_marks_dump_debug(axis_tic_marks *)
-      {method} + void free_axis_tic_marks(axis_tic_marks *)
+    class AxisTicMarks {
+       {field} - ATMColor : TColor
+       {field} - ATMQuantity : integer
+       {field} - ATMWidth : integer
+       {field} - ATMHeight : integer
+      {method} + Create(integer, integer, integer, char)
+      {method} + Destroy
+      {method} + WriteATMToCanvas(TCanvas)
+      {method} + integer GetATMQuantity
+      {method} + integer GetATMWidth
+      {method} + integer GetATMHeight
     }
 
     class CoordinateAxis {
@@ -105,131 +108,100 @@ package GraphingPackage {
   }
 
   ' class relation {
-  '   {method} + void write_rel_to_canvas(canvas *, graph_scale *, double(double), color*, double)
+  '   {method} + void write_rel_to_canvas(canvas *, GraphScale *, double(double), color*, double)
   '   {method} + int map_scale_to_canvas(canvas *, graph_scale *, axis, double)
   ' }
 
   ' class file_io {
   '   {method} + write_canvas_to_file(char *, canvas *)
   ' }
-
-  ' class user_out_file {
-  '    {field} + functions : ast **
-  '    {field} + func_colors : color **
-  '    {field} + file_name : char *
-  '    {field} + qty_functions : int
-  '    {field} + qty_colors : int
-  '    {field} + x_min : double
-  '    {field} + y_min : double
-  '    {field} + x_max : double
-  '    {field} + y_max : double
-  '    {field} + canvas_dims : int
-  '    {field} + qty_tic_marks : int
-  '    {field} + graph_tic_mark_small : int
-  '    {field} + graph_tic_mark_large : int
-  '    {field} + graph_border : int
-  '   {method} + user_out_file * init_user_output_file(void)
-  '   {method} + user_out_file * process_file_heading(token_stack **)
-  '   {method} + void process_func_section(char[], lexer **, token_stack **, token_stack **, FILE *, user_out_file *)
-  '   {method} + void process_color(user_out_file *, token_stack **, lexer **)
-  '   {method} + void process_min_maxes(user_out_file *, token_stack **, lexer **)
-  '   {method} + void process_canvas_dims(user_out_file *, token_stack **, lexer **)
-  '   {method} + void process_qty_tic_marks(user_out_file *, token_stack **, lexer **)
-  '   {method} + void process_tic_marks_small(user_out_file *, token_stack **, lexer **)
-  '   {method} + void process_tic_marks_large(user_out_file *, token_stack **, lexer **)
-  '   {method} + void process_graph_border(user_out_file *, token_stack **, lexer **)
-  '   {method} + void user_out_file_dump_debug(user_out_file *)
-  '   {method} + void free_user_out_file(user_out_file *)
-  '   {method} + void proc_new_line(char[], lexer **, token_stack **, FILE *, token_stack **)
-  '   {method} + void clean_lexer_token_stack(lexer **, token_stack **)
-  ' }
 }
 
-' package FunctionCFG {
-'   package Lexer {
-'     class lexer {
-'        {field} + src : char *
-'        {field} + curr_index : int
-'        {field} + c : char
-'       {method} + lexer * init_lexer(char *)
-'       {method} + token_stack * lex_source(lexer *)
-'       {method} + token * lex_next_token(lexer *)
-'       {method} + token * lex_number(lexer *)
-'       {method} + token * lex_fn_or_var(lexer *)
-'       {method} + void lex_advance(lexer *)
-'       {method} + void lex_whitespace(lexer *)
-'       {method} + void free_lexer(lexer *)
-'     }
-'   }
-' 
-'   package Parser {
-'     class parser {
-'       {method} + ast * parse_expression(token_stack **)
-'       {method} + ast * parse_high_precedence_operator(token_stack **)
-'       {method} + ast * parse_term(token_stack **)
-'       {method} + ast * parse_factor(token_stack **)
-'       {method} + ast * binary_tree(ast *, ast *, ast *)
-'       {method} + ast * unary_tree(ast *, ast *)
-'     }
-' 
-'     class abstract_syntax_tree {
-'        {field} + value : token *
-'        {field} + children : abstract_syntax_tree **
-'        {field} + no_children : int
-'       {method} + ast * init_ast(char *, token_type)
-'       {method} + void ast_pretty_print(ast *)
-'       {method} + void ast_dump_debug(ast *)
-'       {method} + void free_ast(ast *)
-'     }
-'   }
-' 
-'   package Token {
-'     class token {
-'        {field} + t_literal : char *
-'        {field} + type : token_type
-'       {method} + token * init_token(char *, token_type)
-'       {method} + token ** init_token_list(void)
-'       {method} + token ** add_token_to_list(token **, token *, int)
-'       {method} + void token_dump_debug(token *)
-'       {method} + void free_token(token *)
-'       {method} + void free_token_list(token **)
-'     }
-' 
-'     class token_stack {
-'        {field} + current : token *
-'        {field} + prev : token_stack *
-'       {method} + token_stack * init_token_stack(token *)
-'       {method} + token_stack * push_token(token_stack *, token *)
-'       {method} + void token_stack_dump_debug(token_stack *)
-'       {method} + token_stack * reverse_stack(token_stack **)
-'       {method} + token_stack * pop_token(token_stack *)
-'     }
-' 
-'     enum token_type {
-'       TOKEN_VAR
-'       TOKEN_FILE_NAME
-'       TOKEN_NUMBER
-'       TOKEN_PLUS
-'       TOKEN_MINUS
-'       TOKEN_MULT
-'       TOKEN_DIV
-'       TOKEN_L_PAREN
-'       TOKEN_R_PAREN
-'       TOKEN_COMMA
-'       TOKEN_SUCH_THAT
-'       TOKEN_POWER
-'       TOKEN_SIN
-'       TOKEN_COS
-'       TOKEN_TAN
-'       TOKEN_ARC_SIN
-'       TOKEN_ARC_COS
-'       TOKEN_ARC_TAN
-'       TOKEN_LOG
-'       TOKEN_NEWLINE
-'       {method} + token_type_to_string(token_type)
-'     }
-'   }
-' }
+package FunctionCFG {
+  package Lexer {
+    class lexer {
+       {field} + src : char *
+       {field} + curr_index : int
+       {field} + c : char
+      {method} + lexer * init_lexer(char *)
+      {method} + token_stack * lex_source(lexer *)
+      {method} + token * lex_next_token(lexer *)
+      {method} + token * lex_number(lexer *)
+      {method} + token * lex_fn_or_var(lexer *)
+      {method} + void lex_advance(lexer *)
+      {method} + void lex_whitespace(lexer *)
+      {method} + void free_lexer(lexer *)
+    }
+  }
+
+  package Parser {
+    class parser {
+      {method} + ast * parse_expression(token_stack **)
+      {method} + ast * parse_high_precedence_operator(token_stack **)
+      {method} + ast * parse_term(token_stack **)
+      {method} + ast * parse_factor(token_stack **)
+      {method} + ast * binary_tree(ast *, ast *, ast *)
+      {method} + ast * unary_tree(ast *, ast *)
+    }
+
+    class abstract_syntax_tree {
+       {field} + value : token *
+       {field} + children : abstract_syntax_tree **
+       {field} + no_children : int
+      {method} + ast * init_ast(char *, token_type)
+      {method} + void ast_pretty_print(ast *)
+      {method} + void ast_dump_debug(ast *)
+      {method} + void free_ast(ast *)
+    }
+  }
+
+  package Token {
+    class token {
+       {field} + t_literal : char *
+       {field} + type : token_type
+      {method} + token * init_token(char *, token_type)
+      {method} + token ** init_token_list(void)
+      {method} + token ** add_token_to_list(token **, token *, int)
+      {method} + void token_dump_debug(token *)
+      {method} + void free_token(token *)
+      {method} + void free_token_list(token **)
+    }
+
+    class token_stack {
+       {field} + current : token *
+       {field} + prev : token_stack *
+      {method} + token_stack * init_token_stack(token *)
+      {method} + token_stack * push_token(token_stack *, token *)
+      {method} + void token_stack_dump_debug(token_stack *)
+      {method} + token_stack * reverse_stack(token_stack **)
+      {method} + token_stack * pop_token(token_stack *)
+    }
+
+    enum token_type {
+      TOKEN_VAR
+      TOKEN_FILE_NAME
+      TOKEN_NUMBER
+      TOKEN_PLUS
+      TOKEN_MINUS
+      TOKEN_MULT
+      TOKEN_DIV
+      TOKEN_L_PAREN
+      TOKEN_R_PAREN
+      TOKEN_COMMA
+      TOKEN_SUCH_THAT
+      TOKEN_POWER
+      TOKEN_SIN
+      TOKEN_COS
+      TOKEN_TAN
+      TOKEN_ARC_SIN
+      TOKEN_ARC_COS
+      TOKEN_ARC_TAN
+      TOKEN_LOG
+      TOKEN_NEWLINE
+      {method} + token_type_to_string(token_type)
+    }
+  }
+}
 
 ' file_io related
 ' file_io --> lexer
@@ -247,15 +219,15 @@ Pixel        o--> Color
 Canvas "1" o--> "*" Pixel
 
 ' The arrows relating to GraphingPresets
-axis_tic_marks "2" <-up-o "1" graph_scale
-CoordinateAxis "2" <-up-o "1" graph_scale
-GraphBorder        <-up-o     graph_scale
-Numeric            <-up-o     graph_scale
+AxisTicMarks   "2" <-up-o "1" GraphScale
+CoordinateAxis "2" <-up-o "1" GraphScale
+GraphBorder        <-up-o     GraphScale
+Numeric        "2" <-up-o "1" GraphScale
 
-' token       o--> token_type
-' token_stack o--> token
+token       o--> token_type
+token_stack o--> token
 
-' parser --> abstract_syntax_tree
-' parser --> token_stack
+parser --> abstract_syntax_tree
+parser --> token_stack
 
 @enduml
