@@ -156,15 +156,12 @@ package FunctionCFG {
   }
 
   package Token {
-    class token {
-       {field} + t_literal : char *
-       {field} + type : token_type
-      {method} + token * init_token(char *, token_type)
-      {method} + token ** init_token_list(void)
-      {method} + token ** add_token_to_list(token **, token *, int)
-      {method} + void token_dump_debug(token *)
-      {method} + void free_token(token *)
-      {method} + void free_token_list(token **)
+    class Token {
+       {field} - TokenLiteral : Token
+       {field} - TokType : TTokenType
+      {method} + Create(TTokenType, string)
+      {method} + Destroy
+      {method} + Debug
     }
 
     class token_stack {
@@ -177,28 +174,27 @@ package FunctionCFG {
       {method} + token_stack * pop_token(token_stack *)
     }
 
-    enum token_type {
-      TOKEN_VAR
-      TOKEN_FILE_NAME
-      TOKEN_NUMBER
-      TOKEN_PLUS
-      TOKEN_MINUS
-      TOKEN_MULT
-      TOKEN_DIV
-      TOKEN_L_PAREN
-      TOKEN_R_PAREN
-      TOKEN_COMMA
-      TOKEN_SUCH_THAT
-      TOKEN_POWER
-      TOKEN_SIN
-      TOKEN_COS
-      TOKEN_TAN
-      TOKEN_ARC_SIN
-      TOKEN_ARC_COS
-      TOKEN_ARC_TAN
-      TOKEN_LOG
-      TOKEN_NEWLINE
-      {method} + token_type_to_string(token_type)
+    enum TokenType {
+      TokenVar,
+      TokenFileName,
+      TokenNumber,
+      TokenPlus,
+      TokenMinus,
+      TokenMult,
+      TokenDiv,
+      TokenLParen,
+      TokenRParen,
+      TokenComma,
+      TokenPower,
+      TokenSin,
+      TokenCos,
+      TokenTan,
+      TokenArcSin,
+      TokenArcCos,
+      TokenArcTan,
+      TokenLog,
+      TokenNewline
+      {method} + string TokenTypeToString(TTokenType)
     }
   }
 }
@@ -224,8 +220,8 @@ CoordinateAxis "2" <-up-o "1" GraphScale
 GraphBorder        <-up-o     GraphScale
 Numeric        "2" <-up-o "1" GraphScale
 
-token       o--> token_type
-token_stack o--> token
+Token       o--> TokenType
+token_stack o--> Token
 
 parser --> abstract_syntax_tree
 parser --> token_stack
