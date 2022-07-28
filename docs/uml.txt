@@ -89,27 +89,18 @@ package GraphingPackage {
       {method} + void free_graph_border(graph_border *)
     }
 
-    class numerics {
-       {field} + scale_string : char *
-       {field} + numeric_col : color *
-       {field} + current_index : int
-       {field} + height : int
-       {field} + width : int
-       {field} + left_x : int
-       {field} + up_y : int
-      {method} + numeric * init_numer(double, int, int, int)
-      {method} + void write_numeric_to_canvas(numeric *, canvas *)
-      {method} + void write_one_to_canvas(numeric *, canvas *)
-      {method} + void write_two_to_canvas(numeric *, canvas *)
-      {method} + void write_three_to_canvas(numeric *, canvas *)
-      {method} + void write_four_to_canvas(numeric *, canvas *)
-      {method} + void write_five_to_canvas(numeric *, canvas *)
-      {method} + void write_six_to_canvas(numeric *, canvas *)
-      {method} + void write_seven_to_canvas(numeric *, canvas *)
-      {method} + void write_eight_to_canvas(numeric *, canvas *)
-      {method} + void write_nine_to_canvas(numeric *, canvas *)
-      {method} + void write_period_to_canvas(numeric *, canvas *)
-      {method} + void free_numeric(numeric *)
+    class Numeric {
+       {field} - MonoSegment : array of array of integer
+       {field} - Complement : array of boolean
+       {field} - NumericLiteral : string
+       {field} - NumericHeight : integer
+       {field} - NumericWidth : integer
+      {method} + Create(real, integer, integer)
+      {method} + Destroy
+      {method} + WriteNumericToCanvas(integer, integer, TCanvas)
+      {method} + WriteMonoDigitToCanvas(integer, integer, integer, TCanvas)
+      {method} + WriteComplementToCanvas(integer, integer, integer, TCanvas)
+      {method} + Debug
     }
   }
 
@@ -259,7 +250,7 @@ Canvas "1" o--> "*" Pixel
 axis_tic_marks "2" <-up-o "1" graph_scale
 coord_axis     "2" <-up-o "1" graph_scale
 graph_border       <-up-o     graph_scale
-numerics           <-up-o     graph_scale
+Numeric            <-up-o     graph_scale
 
 ' token       o--> token_type
 ' token_stack o--> token

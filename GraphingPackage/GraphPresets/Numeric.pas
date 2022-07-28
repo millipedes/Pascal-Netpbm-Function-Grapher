@@ -19,8 +19,10 @@ type
     destructor Destroy; override;
 
     procedure WriteNumericToCanvas(Top, Left : integer; Can : TCanvas);
-    procedure WriteMonoDigitToCanvas(Index, Top, Left : integer; Can : TCanvas);
-    procedure WriteComplementToCanvas(Index, Top, Left : integer; Can : TCanvas);
+    procedure WriteMonoDigitToCanvas(Index, Top, Left : integer;
+      Can : TCanvas);
+    procedure WriteComplementToCanvas(Index, Top, Left : integer;
+      Can : TCanvas);
 
     procedure Debug;
 end;
@@ -152,22 +154,26 @@ end;
 
 procedure TNumeric.WriteNumericToCanvas(Top, Left : integer; Can : TCanvas);
 var
-  i, j : integer;
+  i, j, MonoSpacer : integer;
 begin
+  MonoSpacer := round(real(NumericWidth) / 20.0);
   for i := 0 to Length(MonoSegment) - 1 do
     begin
       if Complement[i] then
         begin
-          WriteComplementToCanvas(i, Top, Left + (i * NumericWidth), Can);
+          WriteComplementToCanvas(i, Top,
+            Left + (i * (NumericWidth + MonoSpacer)), Can);
         end
       else
         begin
-          WriteMonoDigitToCanvas(i, Top, Left + (i * NumericWidth), Can);
+          WriteMonoDigitToCanvas(i, Top,
+            Left + (i * (NumericWidth + MonoSpacer)), Can);
         end;
     end;
 end;
 
-procedure TNumeric.WriteMonoDigitToCanvas(Index, Top, Left : integer; Can : TCanvas);
+procedure TNumeric.WriteMonoDigitToCanvas(Index, Top, Left : integer;
+  Can : TCanvas);
 var
   i, j, CurrentIndex, OneFifthHeight, OneThirdWidth : integer;
 begin
@@ -178,16 +184,27 @@ begin
     for j := 0 to 2 do
       if (i * 3) + j = MonoSegment[Index][CurrentIndex] then
         begin
-          {procedure TCanvas.WriteRectangle(Left, Top, Height, Width :
-          integer);}
           Can.WriteRectangle(Left + OneThirdWidth * j, Top + OneFifthHeight * i,
             OneFifthHeight, OneThirdWidth);
           inc(CurrentIndex);
         end;
 end;
 
-procedure TNumeric.WriteComplementToCanvas(Index, Top, Left : integer; Can : TCanvas);
+procedure TNumeric.WriteComplementToCanvas(Index, Top, Left : integer;
+  Can : TCanvas);
+var
+  i, j, CurrentIndex, OneFifthHeight, OneThirdWidth : integer;
 begin
+  OneFifthHeight := NumericHeight div 5;
+  OneThirdWidth := NumericWidth div 3;
+  CurrentIndex := 0;
+  for i := 0 to 4 do
+    for j := 0 to 2 do
+      if (i * 3) + j <> MonoSegment[Index][CurrentIndex] then
+          Can.WriteRectangle(Left + OneThirdWidth * j, Top + OneFifthHeight * i,
+            OneFifthHeight, OneThirdWidth)
+      else
+          inc(CurrentIndex);
 end;
 
 procedure TNumeric.Debug;

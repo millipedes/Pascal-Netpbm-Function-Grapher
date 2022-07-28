@@ -9,7 +9,7 @@ var
 
 begin
   P := TCanvas.Create(1000, 1000);
-  N := TNumeric.Create(1.17, 50, 30);
+  N := TNumeric.Create(5.26, 50, 30);
   N.WriteNumericToCanvas(15, 15, P);
   {N.Debug;}
   P.Dump;
