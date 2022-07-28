@@ -58,16 +58,16 @@ begin
     begin
       for i := 0 to Can.GetCanvasHeight - 1 do
         for j := 0 to Can.GetCanvasWidth - 1 do
-          if (j > Can.GetCanvasWidth div 2 - AxisWidth)
-              and (j < Can.GetCanvasWidth div 2 + AxisWidth) then
+          if (j > Can.GetCanvasWidth div 2 - AxisWidth div 2)
+              and (j < Can.GetCanvasWidth div 2 + AxisWidth div 2) then
                 Can.GetPixelInstance(i, j).GetPixelColor.SetChannel(0, 0, 0);
     end
   else
     begin
       for i := 0 to Can.GetCanvasHeight - 1 do
         for j := 0 to Can.GetCanvasWidth - 1 do
-          if (i > Can.GetCanvasWidth div 2 - AxisWidth)
-              and (i < Can.GetCanvasWidth div 2 + AxisWidth) then
+          if (i > Can.GetCanvasWidth div 2 - AxisWidth div 2)
+              and (i < Can.GetCanvasWidth div 2 + AxisWidth div 2) then
                 Can.GetPixelInstance(i, j).GetPixelColor.SetChannel(0, 0, 0);
     end;
 end;

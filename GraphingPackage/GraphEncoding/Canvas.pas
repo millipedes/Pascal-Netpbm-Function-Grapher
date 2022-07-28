@@ -79,8 +79,9 @@ procedure TCanvas.WriteRectangle(Left, Top, Height, Width : integer);
 var
   i, j : integer;
 begin
-  for i := Top to (Top + Height - 1) do
-    for j := Left to (Left + Width - 1) do
+  for i := Top to (Top + Height) do
+    for j := Left to (Left + Width) do
+      if (j > 0) and (i > 0) and (j < CanvasWidth) and (i < CanvasHeight) then
       GetPixelInstance(i, j).GetPixelColor.SetChannel(0, 0, 0);
 end;
 
