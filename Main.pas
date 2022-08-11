@@ -16,9 +16,13 @@ begin
   {P := TCanvas.Create(1000, 1000);}
   {GS.WriteGraphScaleToCanvas(P);}
   TT := TTokenStack.Create(TToken.Create(TokenSin, 'sin'));
-  Writeln(TokenTypeToString(TT.GetValue.GetTokType));
+  TT := TT.Push(TToken.Create(TokenCos, 'cos'));
+  TT := TT.Push(TToken.Create(TokenTan, 'tan'));
+  TT.Debug;
+  TT := TT.PopStack;
   {P.Dump;}
-  TT.Free;
+  {TT.GetPrevious.Free;}
+  {TT.Free;}
   {P.Free;}
   {GS.Free;}
 end.
