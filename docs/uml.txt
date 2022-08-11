@@ -119,27 +119,25 @@ package GraphingPackage {
 
 package FunctionCFG {
   package Lexer {
-    class lexer {
-       {field} + src : char *
-       {field} + curr_index : int
-       {field} + c : char
-      {method} + lexer * init_lexer(char *)
-      {method} + token_stack * lex_source(lexer *)
-      {method} + token * lex_next_token(lexer *)
-      {method} + token * lex_number(lexer *)
-      {method} + token * lex_fn_or_var(lexer *)
-      {method} + void lex_advance(lexer *)
-      {method} + void lex_whitespace(lexer *)
-      {method} + void free_lexer(lexer *)
+    class Lexer {
+       {field} - Source : string
+       {field} - CurrentIndex : integer
+      {method} + Create(string)
+      {method} + Destroy
+      {method} + TToken LexToken
+      {method} + string LexWord
+      {method} + string LexNumber
+      {method} + TTokenStack LexSource
+      {method} + Debug
     }
   }
 
   package Parser {
     class parser {
-      {method} + ast * parse_expression(token_stack **)
-      {method} + ast * parse_high_precedence_operator(token_stack **)
-      {method} + ast * parse_term(token_stack **)
-      {method} + ast * parse_factor(token_stack **)
+      {method} + ast * parse_expression(TokenStack **)
+      {method} + ast * parse_high_precedence_operator(TokenStack **)
+      {method} + ast * parse_term(TokenStack **)
+      {method} + ast * parse_factor(TokenStack **)
       {method} + ast * binary_tree(ast *, ast *, ast *)
       {method} + ast * unary_tree(ast *, ast *)
     }
@@ -164,14 +162,18 @@ package FunctionCFG {
       {method} + Debug
     }
 
-    class token_stack {
-       {field} + current : token *
-       {field} + prev : token_stack *
-      {method} + token_stack * init_token_stack(token *)
-      {method} + token_stack * push_token(token_stack *, token *)
-      {method} + void token_stack_dump_debug(token_stack *)
-      {method} + token_stack * reverse_stack(token_stack **)
-      {method} + token_stack * pop_token(token_stack *)
+    class TokenStack {
+       {field} - Value : TToken
+       {field} - Previous : TTokenType
+      {method} + Create(TToken)
+      {method} + Destroy
+      {method} + SetPrevious(TTokenStack)
+      {method} + Debug
+      {method} + TTokenStack Push(TToken)
+      {method} + TTokenStack Pop
+      {method} + TTokenStack PopStack
+      {method} + TToken GetValue
+      {method} + TTokenStack GetPrevious
     }
 
     enum TokenType {
@@ -221,9 +223,9 @@ GraphBorder        <-up-o     GraphScale
 Numeric        "2" <-up-o "1" GraphScale
 
 Token       o--> TokenType
-token_stack o--> Token
+TokenStack o--> Token
 
 parser --> abstract_syntax_tree
-parser --> token_stack
+parser --> TokenStack
 
 @enduml

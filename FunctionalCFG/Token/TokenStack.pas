@@ -95,6 +95,7 @@ begin
       self := Pop;
     end;
   Destroy;
+  PopStack := nil;
 end;
 
 function TTokenStack.GetValue : TToken;
