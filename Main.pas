@@ -20,15 +20,15 @@ begin
   {GS := TGraphScale.Create(-10, 9, -10, 9);}
   {P := TCanvas.Create(1000, 1000);}
   {GS.WriteGraphScaleToCanvas(P);}
-  L := TLexer.Create('(2 + x) * 4'#10'');
+  L := TLexer.Create('log(x - 1)'#10'');
   TT := L.LexSource;
   {TT.Debug;}
   TT := TT.ReverseStack(TT);
   {TT.Debug;}
   Tree := ParseExpression(TT);
-  {Tree.Debug;}
-  Writeln(EvaluateTree(Tree, 2.0));
-  Tree.Free;
+  Tree.Debug;
+  Writeln(EvaluateTree(Tree, 5.0));
+  {Tree.Free;}
   {L.Debug;}
   L.Free;
   TT := TT.PopStack;

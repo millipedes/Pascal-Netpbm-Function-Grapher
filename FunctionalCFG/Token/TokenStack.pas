@@ -93,11 +93,13 @@ function TTokenStack.ReverseStack(TokStack : TTokenStack) : TTokenStack;
 var
   Reverse : TTokenStack;
 begin
-  Reverse := TTokenStack.Create(TToken.Create(TokStack.GetValue.GetTokType, TokStack.GetValue.GetTokenLiteral));
+  Reverse := TTokenStack.Create(TToken.Create(TokStack.GetValue.GetTokType,
+    TokStack.GetValue.GetTokenLiteral));
   TokStack := TokStack.Pop;
   while TokStack <> nil do
     begin
-      Reverse := Reverse.Push(TToken.Create(TokStack.GetValue.GetTokType, TokStack.GetValue.GetTokenLiteral));
+      Reverse := Reverse.Push(TToken.Create(TokStack.GetValue.GetTokType,
+        TokStack.GetValue.GetTokenLiteral));
       TokStack := TokStack.Pop;
     end;
   ReverseStack := Reverse;

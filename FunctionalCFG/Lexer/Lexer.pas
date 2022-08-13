@@ -2,6 +2,7 @@ unit Lexer;
 {$MODE OBJFPC}
 interface
 uses
+  SysUtils,
   character,
   Token in 'FunctionalCFG/Token/Token.pas',
   TokenType in 'FunctionalCFG/Token/TokenType.pas',
@@ -48,10 +49,23 @@ begin
   if IsLetter(Source[CurrentIndex]) then
     begin
       TempString := LexWord;
+      if CompareStr(TempString, 'sin') = 0 then
+        exit(TToken.Create(TokenSin, TempString));
+      if CompareStr(TempString, 'cos') = 0 then
+        exit(TToken.Create(TokenCos, TempString));
+      if CompareStr(TempString, 'tan') = 0 then
+        exit(TToken.Create(TokenTan, TempString));
+      if CompareStr(TempString, 'arcsin') = 0 then
+        exit(TToken.Create(TokenArcSin, TempString));
+      if CompareStr(TempString, 'arccos') = 0 then
+        exit(TToken.Create(TokenArcCos, TempString));
+      if CompareStr(TempString, 'arctan') = 0 then
+        exit(TToken.Create(TokenArcTan, TempString));
+      if CompareStr(TempString, 'log') = 0 then
+        exit(TToken.Create(TokenLog, TempString));
       if pos('.', TempString) = 0 then
-        exit(TToken.Create(TokenVar, TempString))
-      else
-        exit(TToken.Create(TokenFileName, TempString));
+        exit(TToken.Create(TokenVar, TempString));
+      exit(TToken.Create(TokenFileName, TempString));
     end;
 
   if IsDigit(Source[CurrentIndex]) then

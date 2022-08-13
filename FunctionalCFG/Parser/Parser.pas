@@ -14,6 +14,8 @@ function ParseTerm(var TokStack : TTokenStack) : TAbstractSyntaxTree;
 function ParseFactor(var TokStack : TTokenStack) : TAbstractSyntaxTree;
 function BinaryTree(var Parent, LeftChild, RightChild : TAbstractSyntaxTree)
   : TAbstractSyntaxTree;
+function UnaryTree(var Parent, Child : TAbstractSyntaxTree)
+  : TAbstractSyntaxTree;
 
 implementation
 
@@ -39,6 +41,20 @@ begin
     TokenPower:
         EvaluateTree := power(EvaluateTree(Tree.GetChild(0), X),
           EvaluateTree(Tree.GetChild(1), X));
+    TokenSin:
+      EvaluateTree := Sin(EvaluateTree(Tree.GetChild(0), X));
+    TokenCos:
+      EvaluateTree := Cos(EvaluateTree(Tree.GetChild(0), X));
+    TokenTan:
+      EvaluateTree := Tan(EvaluateTree(Tree.GetChild(0), X));
+    TokenArcSin:
+      EvaluateTree := ArcSin(EvaluateTree(Tree.GetChild(0), X));
+    TokenArcCos:
+      EvaluateTree := ArcCos(EvaluateTree(Tree.GetChild(0), X));
+    TokenArcTan:
+      EvaluateTree := ArcTan2(EvaluateTree(Tree.GetChild(0), X), 1);
+    TokenLog:
+      EvaluateTree := Log2(EvaluateTree(Tree.GetChild(0), X));
   end;
 end;
 
@@ -118,6 +134,20 @@ begin
             exit(LeftChild);
         TokenRParen:
             exit(LeftChild);
+        TokenSin:
+            exit(LeftChild);
+        TokenCos:
+            exit(LeftChild);
+        TokenTan:
+            exit(LeftChild);
+        TokenArcSin:
+            exit(LeftChild);
+        TokenArcCos:
+            exit(LeftChild);
+        TokenArcTan:
+            exit(LeftChild);
+        TokenLog:
+            exit(LeftChild);
       end;
     end;
   ParseTerm := nil;
@@ -170,6 +200,55 @@ begin
             exit(BinaryTree(Parent, LeftChild, RightChild));
           end;
       end;
+    TokenSin:
+      begin
+        TokStack := TokStack.Pop;
+        LeftChild := ParseFactor(TokStack);
+        Parent := TAbstractSyntaxTree.Create(TToken.Create(TokenSin, 'sin'));
+        exit(UnaryTree(Parent, LeftChild));
+      end;
+    TokenCos:
+      begin
+        TokStack := TokStack.Pop;
+        LeftChild := ParseFactor(TokStack);
+        Parent := TAbstractSyntaxTree.Create(TToken.Create(TokenCos, 'cos'));
+        exit(UnaryTree(Parent, LeftChild));
+      end;
+    TokenTan:
+      begin
+        TokStack := TokStack.Pop;
+        LeftChild := ParseFactor(TokStack);
+        Parent := TAbstractSyntaxTree.Create(TToken.Create(TokenTan, 'tan'));
+        exit(UnaryTree(Parent, LeftChild));
+      end;
+    TokenArcSin:
+      begin
+        TokStack := TokStack.Pop;
+        LeftChild := ParseFactor(TokStack);
+        Parent := TAbstractSyntaxTree.Create(TToken.Create(TokenArcSin, 'arcsin'));
+        exit(UnaryTree(Parent, LeftChild));
+      end;
+    TokenArcCos:
+      begin
+        TokStack := TokStack.Pop;
+        LeftChild := ParseFactor(TokStack);
+        Parent := TAbstractSyntaxTree.Create(TToken.Create(TokenArcCos, 'arccos'));
+        exit(UnaryTree(Parent, LeftChild));
+      end;
+    TokenArcTan:
+      begin
+        TokStack := TokStack.Pop;
+        LeftChild := ParseFactor(TokStack);
+        Parent := TAbstractSyntaxTree.Create(TToken.Create(TokenArcTan, 'arctan'));
+        exit(UnaryTree(Parent, LeftChild));
+      end;
+    TokenLog:
+      begin
+        TokStack := TokStack.Pop;
+        LeftChild := ParseFactor(TokStack);
+        Parent := TAbstractSyntaxTree.Create(TToken.Create(TokenLog, 'log'));
+        exit(UnaryTree(Parent, LeftChild));
+      end;
   end;
 end;
 
@@ -180,6 +259,14 @@ begin
   Parent.SetChild(0, LeftChild);
   Parent.SetChild(1, RightChild);
   BinaryTree := Parent;
+end;
+
+function UnaryTree(var Parent, Child : TAbstractSyntaxTree)
+  : TAbstractSyntaxTree;
+begin
+  Parent.SetNoChildren(1);
+  Parent.SetChild(0, Child);
+  UnaryTree := Parent;
 end;
 
 end.

@@ -45,7 +45,7 @@ end;
 procedure TToken.Debug;
 begin 
   Writeln('Token');
-  Writeln('Literal: ', TokenLiteral);
+  Writeln('Literal: ''', TokenLiteral, '''');
   Writeln('Type: ', TokenTypeToString(TokType));
 end;
 
