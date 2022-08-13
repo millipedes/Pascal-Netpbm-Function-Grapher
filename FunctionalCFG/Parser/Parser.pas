@@ -6,7 +6,6 @@ uses
   Token in 'FunctionalCFG/Token/Token.pas',
   TokenType in 'FunctionalCFG/Token/TokenType.pas',
   TokenStack in 'FunctionalCFG/Token/TokenStack.pas',
-  RealOperators in 'FunctionalCFG/Parser/RealOperators.pas',
   AbstractSyntaxTree in 'FunctionalCFG/Parser/AbstractSyntaxTree.pas';
 
 function EvaluateTree(Tree : TAbstractSyntaxTree; X : real) : real;
@@ -22,33 +21,24 @@ function EvaluateTree(Tree : TAbstractSyntaxTree; X : real) : real;
 begin
   Case Tree.GetValue.GetTokType of
     TokenNumber:
-      begin
         exit(StrToFloat(Tree.GetValue.GetTokenLiteral));
-      end;
     TokenVar:
-      begin
         exit(X);
-      end;
     TokenPlus:
-      begin
-        EvaluateTree := EvaluateTree(Tree.GetChild(0), X) + EvaluateTree(Tree.GetChild(1), X);
-      end;
+        EvaluateTree := EvaluateTree(Tree.GetChild(0), X)
+          + EvaluateTree(Tree.GetChild(1), X);
     TokenMinus:
-      begin
-        EvaluateTree := Subtraction(EvaluateTree(Tree.GetChild(0), X), EvaluateTree(Tree.GetChild(1), X));
-      end;
+        EvaluateTree := EvaluateTree(Tree.GetChild(0), X)
+          - EvaluateTree(Tree.GetChild(1), X);
     TokenMult:
-      begin
-        EvaluateTree := EvaluateTree(Tree.GetChild(0), X) * EvaluateTree(Tree.GetChild(1), X);
-      end;
+        EvaluateTree := EvaluateTree(Tree.GetChild(0), X)
+          * EvaluateTree(Tree.GetChild(1), X);
     TokenDiv:
-      begin
-        EvaluateTree := EvaluateTree(Tree.GetChild(0), X) / EvaluateTree(Tree.GetChild(1), X);
-      end;
+        EvaluateTree := EvaluateTree(Tree.GetChild(0), X)
+          / EvaluateTree(Tree.GetChild(1), X);
     TokenPower:
-      begin
-        EvaluateTree := power(EvaluateTree(Tree.GetChild(0), X), EvaluateTree(Tree.GetChild(1), X));
-      end;
+        EvaluateTree := power(EvaluateTree(Tree.GetChild(0), X),
+          EvaluateTree(Tree.GetChild(1), X));
   end;
 end;
 
@@ -78,21 +68,13 @@ begin
             exit(BinaryTree(Parent, LeftChild, RightChild));
           end;
         TokenRParen:
-          begin
             exit(LeftChild);
-          end;
         TokenVar:
-          begin
             exit(LeftChild);
-          end;
         TokenNumber:
-          begin
             exit(LeftChild);
-          end;
         TokenNewLine:
-          begin
             exit(LeftChild);
-          end;
       end;
     end;
   ParseExpression := nil;
@@ -109,13 +91,9 @@ begin
       LeftChild := ParseFactor(TokStack);
       Case TokStack.GetValue.GetTokType of
         TokenVar:
-          begin
             exit(LeftChild);
-          end;
         TokenNumber:
-          begin
             exit(LeftChild);
-          end;
         TokenMult:
           begin
             TokStack := TokStack.Pop;
@@ -131,25 +109,15 @@ begin
             exit(BinaryTree(Parent, LeftChild, RightChild));
           end;
         TokenNewLine:
-          begin
             exit(LeftChild);
-          end;
         TokenMinus:
-          begin
             exit(LeftChild);
-          end;
         TokenPlus:
-          begin
             exit(LeftChild);
-          end;
         TokenPower:
-          begin
             exit(LeftChild);
-          end;
         TokenRParen:
-          begin
             exit(LeftChild);
-          end;
       end;
     end;
   ParseTerm := nil;
@@ -176,11 +144,9 @@ begin
       end;
     TokenNumber:
       begin
-        {Writeln(TokenTypeToString(TokStack.GetValue.GetTokType), ' ', TokStack.GetValue.GetTokenLiteral);}
         LeftChild := TAbstractSyntaxTree.Create(TToken.Create(
             TokStack.GetValue.GetTokType, TokStack.GetValue.GetTokenLiteral));
         TokStack := TokStack.Pop;
-        {Writeln(TokenTypeToString(TokStack.GetValue.GetTokType), ' ', TokStack.GetValue.GetTokenLiteral);}
         if TokStack.GetValue.GetTokType <> TokenPower then
             exit(LeftChild);
         TokStack := TokStack.Pop;
