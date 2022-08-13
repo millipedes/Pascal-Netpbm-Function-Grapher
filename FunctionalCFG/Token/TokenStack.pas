@@ -22,6 +22,7 @@ type
     function PopStack : TTokenStack;
     function GetValue : TToken;
     function GetPrevious : TTokenStack;
+    function ReverseStack(TokStack : TTokenStack) : TTokenStack;
 end;
 
 implementation
@@ -77,15 +78,29 @@ begin
       Value.Free;
       Value := nil;
     end;
-  if Previous <> nil then
+  TempStack := Previous;
+  Destroy;
+  if TempStack <> nil then
     begin
-      TempStack := Previous;
-      self.Destroy;
-    end;
-  if TempStack.GetValue <> nil then
-    Pop := TempStack
+      if TempStack.GetValue <> nil then
+        Pop := TempStack;
+    end
   else
     Pop := nil;
+end;
+
+function TTokenStack.ReverseStack(TokStack : TTokenStack) : TTokenStack;
+var
+  Reverse : TTokenStack;
+begin
+  Reverse := TTokenStack.Create(TToken.Create(TokStack.GetValue.GetTokType, TokStack.GetValue.GetTokenLiteral));
+  TokStack := TokStack.Pop;
+  while TokStack <> nil do
+    begin
+      Reverse := Reverse.Push(TToken.Create(TokStack.GetValue.GetTokType, TokStack.GetValue.GetTokenLiteral));
+      TokStack := TokStack.Pop;
+    end;
+  ReverseStack := Reverse;
 end;
 
 function TTokenStack.PopStack : TTokenStack;

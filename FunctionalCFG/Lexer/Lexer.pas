@@ -105,13 +105,6 @@ begin
       end;
   end;
 end;
-{TokenSin,
-TokenCos,
-TokenTan,
-TokenArcSin,
-TokenArcCos,
-TokenArcTan,
-TokenLog}
 
 function TLexer.LexWord : string;
 var
@@ -135,12 +128,11 @@ var
   Start : integer;
 begin
   Start := CurrentIndex;
+  TheNumber := Source[CurrentIndex];
   while IsDigit(Source[CurrentIndex]) or (Source[CurrentIndex] = '.') do
     begin
       if CurrentIndex <> Start then
-        TheNumber := TheNumber + Source[CurrentIndex]
-      else
-        TheNumber := Source[CurrentIndex];
+        TheNumber := TheNumber + Source[CurrentIndex];
       inc(CurrentIndex);
     end;
     LexNumber := TheNumber;
