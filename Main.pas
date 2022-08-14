@@ -1,8 +1,12 @@
 program Main;
 uses
+  SysUtils,
+  FileIO in 'FileIO/FileIO.pas',
   Token in 'FunctionalCFG/Token/Token.pas',
   TokenType in 'FunctionalCFG/Token/TokenType.pas',
   TokenStack in 'FunctionalCFG/Token/TokenStack.pas',
+  Color in 'GraphingPackage/GraphEncoding/Color.pas',
+  GraphRelation in 'GraphingPackage/GraphRelation.pas',
   Lexer in 'FunctionalCFG/Lexer/Lexer.pas',
   AbstractSyntaxTree in 'FunctionalCFG/Parser/AbstractSyntaxTree.pas',
   Parser in 'FunctionalCFG/Parser/Parser.pas',
@@ -10,31 +14,28 @@ uses
   Canvas in 'GraphingPackage/GraphEncoding/Canvas.pas';
 
 var
-    P  : TCanvas;
+     P : TCanvas;
     GS : TGraphScale;
     TT : TTokenStack;
-    L  : TLexer;
+     L : TLexer;
   Tree : TAbstractSyntaxTree;
+   Col : TColor;
 
 begin
-  {GS := TGraphScale.Create(-10, 9, -10, 9);}
-  {P := TCanvas.Create(1000, 1000);}
-  {GS.WriteGraphScaleToCanvas(P);}
-  L := TLexer.Create('log(x - 1)'#10'');
+  GS := TGraphScale.Create(-10, 10, -10, 10);
+  P := TCanvas.Create(1000, 1000);
+  GS.WriteGraphScaleToCanvas(P);
+  L := TLexer.Create('2 * x ^ 2'#10'');
   TT := L.LexSource;
-  {TT.Debug;}
   TT := TT.ReverseStack(TT);
-  {TT.Debug;}
   Tree := ParseExpression(TT);
-  Tree.Debug;
-  Writeln(EvaluateTree(Tree, 5.0));
-  {Tree.Free;}
-  {L.Debug;}
+  Col := TColor.Create(0, 23, 66);
+  WriteRelationToCanvas(Tree, P, GS, Col, 0.001);
+  WriteCanvasToFile('test.ppm', P);
+  Tree.Free;
+  Col.Free;
   L.Free;
   TT := TT.PopStack;
-  {P.Dump;}
-  {TT.GetPrevious.Free;}
-  {TT.Free;}
-  {P.Free;}
-  {GS.Free;}
+  P.Free;
+  GS.Free;
 end.

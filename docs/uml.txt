@@ -107,14 +107,17 @@ package GraphingPackage {
     }
   }
 
-  ' class relation {
-  '   {method} + void write_rel_to_canvas(canvas *, GraphScale *, double(double), color*, double)
-  '   {method} + int map_scale_to_canvas(canvas *, graph_scale *, axis, double)
-  ' }
+}
 
-  ' class file_io {
-  '   {method} + write_canvas_to_file(char *, canvas *)
-  ' }
+package FileIO {
+  class relation {
+    {method} + void write_rel_to_canvas(canvas *, GraphScale *, double(double), color*, double)
+    {method} + int map_scale_to_canvas(canvas *, graph_scale *, axis, double)
+  }
+
+  class file_io {
+    {method} + write_canvas_to_file(char *, canvas *)
+  }
 }
 
 package FunctionCFG {
@@ -133,23 +136,28 @@ package FunctionCFG {
   }
 
   package Parser {
-    class parser {
-      {method} + ast * parse_expression(TokenStack **)
-      {method} + ast * parse_high_precedence_operator(TokenStack **)
-      {method} + ast * parse_term(TokenStack **)
-      {method} + ast * parse_factor(TokenStack **)
-      {method} + ast * binary_tree(ast *, ast *, ast *)
-      {method} + ast * unary_tree(ast *, ast *)
+    class Parser {
+      {method} + real EvaluateTree(TAbstractSyntaxTree, real)
+      {method} + TAbstractSyntaxTree ParseExpression(TTokenStack)
+      {method} + TAbstractSyntaxTree ParseTerm(TTokenStack)
+      {method} + TAbstractSyntaxTree ParseFactor(var TokStack : TTokenStack)
+      {method} + TAbstractSyntaxTree BinaryTree(TAbstractSyntaxTree,
+ TAbstractSyntaxTree, TAbstractSyntaxTree)
+      {method} + TAbstractSyntaxTree UnaryTree(TAbstractSyntaxTree,
+ TAbstractSyntaxTree, TAbstractSyntaxTree)
     }
 
-    class abstract_syntax_tree {
-       {field} + value : token *
-       {field} + children : abstract_syntax_tree **
-       {field} + no_children : int
-      {method} + ast * init_ast(char *, token_type)
-      {method} + void ast_pretty_print(ast *)
-      {method} + void ast_dump_debug(ast *)
-      {method} + void free_ast(ast *)
+    class AbstractSyntaxTree {
+       {field} - Value : TToken
+       {field} - Children : TAbstractSyntaxTree
+       {field} - NoChildren : integer
+      {method} + Create(TToken)
+      {method} + Destroy
+      {method} + SetNoChildren(integer)
+      {method} + SetChild(integer, TAbstractSyntaxTree)
+      {method} + TToken GetValue
+      {method} + TAbstractSyntaxTree GetChild(integer)
+      {method} + Debug;
     }
   }
 
@@ -202,16 +210,13 @@ package FunctionCFG {
 }
 
 ' file_io related
-' file_io --> lexer
-' file_io --> graph_scale
-' file_io --> canvas
-' file_io --> parser
-' file_io --> relation
-' file_io --> user_out_file
+file_io --> Lexer
+file_io --> GraphScale
+file_io --> Canvas
+file_io --> Parser
 
 ' The arrows to color
-Pixel        o--> Color
-' graph_border o--> color
+Pixel       o--> Color
 
 ' The arrows relating to GraphEncoding
 Canvas "1" o--> "*" Pixel
@@ -225,7 +230,7 @@ Numeric        "2" <-up-o "1" GraphScale
 Token       o--> TokenType
 TokenStack o--> Token
 
-parser --> abstract_syntax_tree
-parser --> TokenStack
+Parser --> AbstractSyntaxTree
+Parser --> TokenStack
 
 @enduml

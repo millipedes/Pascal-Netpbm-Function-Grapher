@@ -19,10 +19,11 @@ type
     procedure SetGreenC(g: integer);
     procedure SetBlueC(b: integer);
     procedure SetChannel(r, g, b : integer);
-    function GetRedC() : integer;
-    function GetGreenC() : integer;
-    function GetBlueC() : integer;
-    function GetChannel() : string;
+    function IsColorWhite : boolean;
+    function GetRedC : integer;
+    function GetGreenC : integer;
+    function GetBlueC : integer;
+    function GetChannel : string;
 
     procedure Debug;
 end;
@@ -39,8 +40,8 @@ end;
 constructor TColor.Create(r, g, b: integer); overload;
 begin
   RedC := r;
-  BlueC := g;
-  GreenC := b;
+  GreenC := g;
+  BlueC := b;
 end;
 
 destructor TColor.Destroy;
@@ -70,22 +71,30 @@ begin
   SetBlueC(b);
 end;
 
-function TColor.GetRedC() : integer;
+function TColor.IsColorWhite : boolean;
+begin
+  if (RedC = 255) and (GreenC = 255) and (BlueC = 255) then
+    IsColorWhite := true
+  else
+    IsColorWhite := false;
+end;
+
+function TColor.GetRedC : integer;
 begin
   GetRedC := RedC;
 end;
 
-function TColor.GetGreenC() : integer;
+function TColor.GetGreenC : integer;
 begin
   GetGreenC := GreenC;
 end;
 
-function TColor.GetBlueC() : integer;
+function TColor.GetBlueC : integer;
 begin
   GetBlueC := BlueC;
 end;
 
-function TColor.GetChannel() : string;
+function TColor.GetChannel : string;
 begin
   GetChannel := IntToStr(RedC) + ' ' + IntToStr(GreenC) + ' ' + IntToStr(BlueC);
 end;

@@ -2,6 +2,7 @@ unit Canvas;
 {$MODE OBJFPC}
 interface
 uses
+  SysUtils,
   Pixel in 'GraphingPackage/GraphEncoding/Pixel.pas';
 
 type
@@ -19,7 +20,7 @@ type
     function GetCanvasHeight() : integer;
     function GetCanvasWidth() : integer;
     procedure WriteRectangle(Left, Top, Height, Width : integer);
-    procedure Dump;
+    procedure DumpFile(var Name : TextFile);
 
     procedure Debug;
 end;
@@ -85,16 +86,16 @@ begin
       GetPixelInstance(i, j).GetPixelColor.SetChannel(0, 0, 0);
 end;
 
-procedure TCanvas.Dump;
+procedure TCanvas.DumpFile(var Name : TextFile);
 var
   i, j : integer;
 begin
-  Writeln('P3');
-  Writeln(CanvasWidth, ' ', CanvasHeight);
-  Writeln('255');
+  Writeln(Name, 'P3');
+  Writeln(Name, CanvasWidth, ' ', CanvasHeight);
+  Writeln(Name, '255');
   for i := 0 to (CanvasHeight - 1) do
     for j := 0 to (CanvasWidth - 1) do
-      Writeln(PixelInstance[i][j].GetPixelColor.GetChannel);
+      Writeln(Name, PixelInstance[i][j].GetPixelColor.GetChannel);
 end;
 
 procedure TCanvas.Debug;

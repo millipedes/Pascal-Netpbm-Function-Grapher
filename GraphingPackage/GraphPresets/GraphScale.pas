@@ -20,6 +20,8 @@ type
     constructor Create(XMin, XMax, YMin, YMax : real); overload;
     destructor Destroy; override;
 
+    function GetCoordAxis(Index : integer) : TCoordinateAxis;
+
     procedure WriteGraphScaleToCanvas(Can : TCanvas);
 end;
 
@@ -43,8 +45,8 @@ begin
   YNumericLiteral :=
     real(GSCoordinateAxes[1].GetAxisMax - GSCoordinateAxes[1].GetAxisMin)
     / real(GSAxesTicMarks[1].GetATMQuantity);
-  GSNumeric[0] := TNumeric.Create(XNumericLiteral, 40, 25);
-  GSNumeric[1] := TNumeric.Create(YNumericLiteral, 40, 25);
+  GSNumeric[0] := TNumeric.Create(XNumericLiteral, 30, 15);
+  GSNumeric[1] := TNumeric.Create(YNumericLiteral, 30, 15);
 end;
 
 constructor TGraphScale.Create(XMin, XMax, YMin, YMax : real);
@@ -79,6 +81,17 @@ begin
   GSNumeric[0].Free;
   GSNumeric[1].Free;
   inherited;
+end;
+
+function TGraphScale.GetCoordAxis(Index : integer) : TCoordinateAxis;
+begin
+  if (Index <= 1) and (Index >= 0) then
+    GetCoordAxis := GSCoordinateAxes[Index]
+  else
+    begin
+      Writeln('Get CoordAxis Index Violation');
+      GetCoordAxis := nil;
+    end;
 end;
 
 procedure TGraphScale.WriteGraphScaleToCanvas(Can : TCanvas);
