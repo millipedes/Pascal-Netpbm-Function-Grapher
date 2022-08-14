@@ -3,10 +3,10 @@ interface
 uses
   SysUtils,
   Math,
-  Token in 'FunctionalCFG/Token/Token.pas',
-  TokenType in 'FunctionalCFG/Token/TokenType.pas',
-  TokenStack in 'FunctionalCFG/Token/TokenStack.pas',
-  AbstractSyntaxTree in 'FunctionalCFG/Parser/AbstractSyntaxTree.pas';
+  AbstractSyntaxTree in 'FunctionalCFG/Parser/AbstractSyntaxTree.pas',
+  Token              in 'FunctionalCFG/Token/Token.pas',
+  TokenType          in 'FunctionalCFG/Token/TokenType.pas',
+  TokenStack         in 'FunctionalCFG/Token/TokenStack.pas';
 
 function EvaluateTree(Tree : TAbstractSyntaxTree; X : real) : real;
 function ParseExpression(var TokStack : TTokenStack) : TAbstractSyntaxTree;

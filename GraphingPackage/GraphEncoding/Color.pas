@@ -2,7 +2,7 @@ unit Color;
 {$MODE OBJFPC}
 interface
 uses
-  sysutils;
+  Sysutils;
 
 type
   TColor = Class

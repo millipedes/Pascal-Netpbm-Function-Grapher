@@ -1,17 +1,17 @@
 program Main;
 uses
   SysUtils,
-  FileIO in 'FileIO/FileIO.pas',
-  Token in 'FunctionalCFG/Token/Token.pas',
-  TokenType in 'FunctionalCFG/Token/TokenType.pas',
-  TokenStack in 'FunctionalCFG/Token/TokenStack.pas',
-  Color in 'GraphingPackage/GraphEncoding/Color.pas',
-  GraphRelation in 'GraphingPackage/GraphRelation.pas',
-  Lexer in 'FunctionalCFG/Lexer/Lexer.pas',
+  FileIO             in 'FileIO/FileIO.pas',
+  Lexer              in 'FunctionalCFG/Lexer/Lexer.pas',
   AbstractSyntaxTree in 'FunctionalCFG/Parser/AbstractSyntaxTree.pas',
-  Parser in 'FunctionalCFG/Parser/Parser.pas',
-  GraphScale in 'GraphingPackage/GraphPresets/GraphScale.pas',
-  Canvas in 'GraphingPackage/GraphEncoding/Canvas.pas';
+  Parser             in 'FunctionalCFG/Parser/Parser.pas',
+  Token              in 'FunctionalCFG/Token/Token.pas',
+  TokenStack         in 'FunctionalCFG/Token/TokenStack.pas',
+  TokenType          in 'FunctionalCFG/Token/TokenType.pas',
+  GraphRelation      in 'GraphingPackage/GraphRelation.pas',
+  Canvas             in 'GraphingPackage/GraphEncoding/Canvas.pas',
+  Color              in 'GraphingPackage/GraphEncoding/Color.pas',
+  GraphScale         in 'GraphingPackage/GraphPresets/GraphScale.pas';
 
 var
      P : TCanvas;

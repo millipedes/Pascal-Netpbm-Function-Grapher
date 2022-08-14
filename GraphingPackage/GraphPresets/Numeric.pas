@@ -2,9 +2,9 @@ unit Numeric;
 {$MODE OBJFPC}
 interface
 uses
-  Color in 'GraphingPackage/GraphEncoding/Color.pas',
+  Sysutils,
   Canvas in 'GraphingPackage/GraphEncoding/Canvas.pas',
-  sysutils;
+  Color  in 'GraphingPackage/GraphEncoding/Color.pas';
 
 type
   TNumeric = Class

@@ -2,11 +2,11 @@ unit GraphRelation;
 interface
 uses
   SysUtils,
-  Canvas in 'GraphingPackage/GraphEncoding/Canvas.pas',
-  Color in 'GraphingPackage/GraphEncoding/Color.pas',
-  GraphScale in 'GraphingPackage/GraphPresets/GraphScale.pas',
-  Parser in 'FunctionalCFG/Parser/Parser.pas',
-  AbstractSyntaxTree in 'FunctionalCFG/Parser/AbstractSyntaxTree.pas';
+  Canvas             in 'GraphingPackage/GraphEncoding/Canvas.pas',
+  Color              in 'GraphingPackage/GraphEncoding/Color.pas',
+  GraphScale         in 'GraphingPackage/GraphPresets/GraphScale.pas',
+  AbstractSyntaxTree in 'FunctionalCFG/Parser/AbstractSyntaxTree.pas',
+  Parser             in 'FunctionalCFG/Parser/Parser.pas';
 
 function MapScaleToCanvas(Can : TCanvas; Scale : TGraphScale; IsX : boolean;
   Quantity : real) : integer;

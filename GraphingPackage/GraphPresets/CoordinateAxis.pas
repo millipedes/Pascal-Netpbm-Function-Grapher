@@ -2,8 +2,8 @@ unit CoordinateAxis;
 {$MODE OBJFPC}
 interface
 uses
-  Color in 'GraphingPackage/GraphEncoding/Color.pas',
-  Canvas in 'GraphingPackage/GraphEncoding/Canvas.pas';
+  Canvas in 'GraphingPackage/GraphEncoding/Canvas.pas',
+  Color  in 'GraphingPackage/GraphEncoding/Color.pas';
 
 type
   TCoordinateAxis = Class

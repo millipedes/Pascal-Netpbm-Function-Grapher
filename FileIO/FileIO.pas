@@ -3,11 +3,11 @@ unit FileIO;
 interface
 uses
   SysUtils,
-  Canvas in 'GraphingPackage/GraphEncoding/Canvas.pas',
-  Token in 'FunctionalCFG/Token/Token.pas',
-  TokenType in 'FunctionalCFG/Token/TokenType.pas',
-  TokenStack in 'FunctionalCFG/Token/TokenStack.pas',
-  AbstractSyntaxTree in 'FunctionalCFG/Parser/AbstractSyntaxTree.pas';
+  Canvas             in 'GraphingPackage/GraphEncoding/Canvas.pas',
+  AbstractSyntaxTree in 'FunctionalCFG/Parser/AbstractSyntaxTree.pas',
+  Token              in 'FunctionalCFG/Token/Token.pas',
+  TokenStack         in 'FunctionalCFG/Token/TokenStack.pas',
+  TokenType          in 'FunctionalCFG/Token/TokenType.pas';
 
 var
   FilePointer : TextFile;

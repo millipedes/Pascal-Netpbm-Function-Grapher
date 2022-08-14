@@ -2,11 +2,11 @@ unit GraphScale;
 {$MODE OBJFPC}
 interface
 uses
-  Numeric in 'GraphingPackage/GraphPresets/Numeric.pas',
-  GraphBorder in 'GraphingPackage/GraphPresets/GraphBorder.pas',
+  Canvas         in 'GraphingPackage/GraphEncoding/Canvas.pas',
+  AxisTicMarks   in 'GraphingPackage/GraphPresets/AxisTicMarks.pas',
   CoordinateAxis in 'GraphingPackage/GraphPresets/CoordinateAxis.pas',
-  AxisTicMarks in 'GraphingPackage/GraphPresets/AxisTicMarks.pas',
-  Canvas in 'GraphingPackage/GraphEncoding/Canvas.pas';
+  GraphBorder    in 'GraphingPackage/GraphPresets/GraphBorder.pas',
+  Numeric        in 'GraphingPackage/GraphPresets/Numeric.pas';
 
 type
   TGraphScale = Class

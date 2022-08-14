@@ -2,8 +2,8 @@ unit GraphBorder;
 {$MODE OBJFPC}
 interface
 uses
-  Color in 'GraphingPackage/GraphEncoding/Color.pas',
   Canvas in 'GraphingPackage/GraphEncoding/Canvas.pas',
+  Color  in 'GraphingPackage/GraphEncoding/Color.pas',
   sysutils;
 
 type
