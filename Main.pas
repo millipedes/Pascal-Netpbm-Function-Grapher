@@ -25,12 +25,12 @@ begin
   GS := TGraphScale.Create(-10, 10, -10, 10);
   P := TCanvas.Create(1000, 1000);
   GS.WriteGraphScaleToCanvas(P);
-  L := TLexer.Create('2 * x ^ 2'#10'');
+  L := TLexer.Create('log(x - 1)'#10'');
   TT := L.LexSource;
   TT := TT.ReverseStack(TT);
   Tree := ParseExpression(TT);
   Col := TColor.Create(0, 23, 66);
-  WriteRelationToCanvas(Tree, P, GS, Col, 0.001);
+  WriteRelationToCanvas(Tree, P, GS, Col, 0.0001);
   WriteCanvasToFile('test.ppm', P);
   Tree.Free;
   Col.Free;

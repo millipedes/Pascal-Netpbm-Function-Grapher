@@ -20,6 +20,8 @@ function UnaryTree(var Parent, Child : TAbstractSyntaxTree)
 implementation
 
 function EvaluateTree(Tree : TAbstractSyntaxTree; X : real) : real;
+var
+  Temp : real;
 begin
   Case Tree.GetValue.GetTokType of
     TokenNumber:
@@ -54,7 +56,13 @@ begin
     TokenArcTan:
       EvaluateTree := ArcTan2(EvaluateTree(Tree.GetChild(0), X), 1);
     TokenLog:
-      EvaluateTree := Log2(EvaluateTree(Tree.GetChild(0), X));
+      begin
+        Temp := EvaluateTree(Tree.GetChild(0), X);
+        if Temp > 0 then
+          EvaluateTree := Log2(Temp)
+        else
+          EvaluateTree := 0;
+      end;
   end;
 end;
 

@@ -48,13 +48,11 @@ begin
         YIndex := Can.GetCanvasHeight - MapScaleToCanvas(Can, Scale, false,
           y - Scale.GetCoordAxis(0).GetAxisMin);
 
-      {Writeln(XIndex, ' ', YIndex);}
-
       if (y < Scale.GetCoordAxis(1).GetAxisMax) and
          (y >= Scale.GetCoordAxis(0).GetAxisMin) and
          ((XIndex >= 0) and (XIndex < Can.GetCanvasWidth)) and
          ((YIndex >= 0) and (YIndex < Can.GetCanvasHeight)) then
-           if Can.GetPixelInstance(XIndex, YIndex).GetPixelColor.IsColorWhite then
+           if Can.GetPixelInstance(YIndex, XIndex).GetPixelColor.IsColorWhite then
              begin
                Can.GetPixelInstance(YIndex, XIndex - 1).GetPixelColor
                  .SetChannel(Col.GetRedC, Col.GetGreenC, Col.GetBlueC);
